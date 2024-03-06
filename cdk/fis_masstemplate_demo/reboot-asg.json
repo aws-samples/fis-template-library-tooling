@@ -1,0 +1,30 @@
+{
+    "description": "RebootInstances",
+    "targets": {
+        "Instances-Target-1": {
+            "resourceType": "aws:ec2:instance",
+            "resourceTags": {
+                "Name": "FisStackAsg/ASG"
+            },
+            "selectionMode": "ALL"
+        }
+    },
+    "actions": {
+        "RebootInstances": {
+            "actionId": "aws:ec2:reboot-instances",
+            "parameters": {},
+            "targets": {
+                "Instances": "Instances-Target-1"
+            }
+        }
+    },
+    "stopConditions": [
+        {
+            "source": "none"
+        }
+    ],
+    "roleArn": "arn:aws:iam::<ACCOUNT ID>:role/FisWorkshopServiceRole",
+    "tags": {
+        "Name": "Reboot-ASGGroup"
+    }
+}

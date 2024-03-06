@@ -1,0 +1,40 @@
+{
+    "description": "This Experiment Stops IIS on target Windows Instances",
+    "targets": {
+        "IISServers": {
+            "resourceType": "aws:ec2:instance",
+            "resourceTags": {
+                "FIS-Ready": "true"
+            },
+            "selectionMode": "ALL"
+        }
+    },
+    "actions": {
+        "StopIIS": {
+            "actionId": "aws:ssm:send-command",
+            "parameters": {
+                "documentArn": "arn:aws:ssm:us-east-1:<ACCOUNT ID>:document/StopIISAppPool",
+                "documentParameters": "{\"DurationSeconds\": \"60\", \"IISAppPoolName\": \"DefaultAppPool\"}",
+                "duration": "PT5M"
+            },
+            "targets": {
+                "Instances": "IISServers"
+            }
+        }
+    },
+    "stopConditions": [
+        {
+            "source": "none"
+        }
+    ],
+    "roleArn": "arn:aws:iam::<ACCOUNT ID>:role/WindowsFisDemo-fisRolefisrole906DA1E4-1V96J3Q2BR4B",
+    "tags": {
+        "Name": "StopIISExperiment"
+    },
+    "logConfiguration": {
+        "cloudWatchLogsConfiguration": {
+            "logGroupArn": "arn:aws:logs:<REGION>:<ACCOUNT ID>:log-group:WindowsFisDemo-stopIISLogGroup033E7F78-s9TPbAloPuGL:*"
+        },
+        "logSchemaVersion": 1
+    }
+}

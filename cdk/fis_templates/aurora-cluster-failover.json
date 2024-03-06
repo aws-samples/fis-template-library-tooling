@@ -1,0 +1,31 @@
+{
+    "description": "FisWorkshopAurora1",
+    "targets": {
+            "Clusters-Target-1": {
+                    "resourceType": "aws:rds:cluster",
+                    "resourceArns": [
+                            "arn:aws:rds:<REGION>:<ACCOUNT ID>:cluster:fisstackrdsaurora-fisworkshoprdsauroraee7bf768-0lfc5l2tudt8"
+                    ],
+                    "selectionMode": "ALL"
+            }
+    },
+    "actions": {
+            "FisWorkshopFailoverAuroraCluster": {
+                    "actionId": "aws:rds:failover-db-cluster",
+                    "description": "Failover Aurora Cluster",
+                    "parameters": {},
+                    "targets": {
+                            "Clusters": "Clusters-Target-1"
+                    }
+            }
+    },
+    "stopConditions": [
+            {
+                    "source": "none"
+            }
+    ],
+    "roleArn": "arn:aws:iam::<ACCOUNT ID>:role/FisWorkshopServiceRole",
+    "tags": {
+            "Name": "FailoverAuroraCluster"
+    }
+}

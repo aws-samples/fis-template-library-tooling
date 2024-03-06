@@ -1,0 +1,116 @@
+{
+    "Version": "2012–10–17",
+    "Statement": [{
+        "Sid": "AllowFISExperimentRoleCloudWatchActions",
+        "Effect": "Allow",
+        "Action": ["cloudwatch:DescribeAlarms"],
+        "Resource": "*"
+    },
+    {
+        "Sid": "AllowFISExperimentRoleEC2ReadOnly",
+        "Effect": "Allow",
+        "Action": ["ec2:DescribeInstances"],
+        "Resource": "*"
+    },
+    {
+        "Sid": "AllowFISExperimentRoleEC2Actions",
+        "Effect": "Allow",
+        "Action": [
+            "ec2:RebootInstances",
+            "ec2:StopInstances",
+            "ec2:StartInstances",
+            "ec2:TerminateInstances",
+            "ec2:SendSpotInstanceInterruptions"
+        ],
+        "Resource": "arn:aws:ec2:*:*:instance/*",
+        "Condition": {
+            "StringEquals": {"aws:ResourceTag/FIS-Ready": "True"}
+        }
+    },
+    {
+        "Sid": "AllowFISExperimentRoleEC2Volume",
+        "Effect": "Allow",
+        "Action": [
+            "ec2:PauseVolumeIO"
+        ],
+        "Resource": "arn:aws:ec2:*:*:volume/*",
+        "Condition": {
+            "StringEquals": {"aws:ResourceTag/FIS-Ready": "True"}
+        }
+    },
+    {
+        "Sid": "AllowFISExperimentRoleRDSReadOnly",
+        "Effect": "Allow",
+        "Action": [
+            "rds:DescribeDBInstances", 
+            "rds:DescribeDbClusters"
+        ],
+        "Resource": "arn:aws:ec2:*:*:volume/*",
+        "Condition": {
+            "StringEquals": {"aws:ResourceTag/FIS-Ready": "True"}
+        }
+    },
+    {
+        "Sid": "AllowFISExperimentRoleRDSReboot",
+        "Effect": "Allow",
+        "Action": [
+            "rds:RebootDBInstance"
+        ],
+        "Resource": "arn:aws:rds:*:*:db:*"
+    },
+    {
+        "Sid": "AllowFISExperimentRoleRDSClusterReboot",
+        "Effect": "Allow",
+        "Action": [
+            "rds:FailoverDBCluster"
+        ],
+        "Resource": "arn:aws:rds:*:*:cluster:*"
+    },    
+    {
+        "Sid": "AllowFISExperimentRoleSSMReadOnly",
+        "Effect": "Allow",
+        "Action": [
+            "ec2:DescribeInstances",
+            "ssm:ListCommands",
+            "ssm:CancelCommand",
+            "ssm:PutParameter"
+        ],
+        "Resource": "*"
+    },    
+    {
+        "Sid": "AllowFISExperimentRoleSSMAAction",
+        "Effect": "Allow",
+        "Action": [
+            "ssm:StopAutomationExecution", 
+            "ssm:GetAutomationExecution", 
+            "ssm:StartAutomationExecution"
+        ],
+        "Resource": "*"
+    },
+    {
+        "Sid": "AllowFISExperimentRoleSSMSendCommand",
+        "Effect": "Allow",
+        "Action": [
+            "ssm:SendCommand"
+        ],
+        "Resource": ["arn:aws:ec2:*:*:instance/*", "arn:aws:ssm:*:*:document/*"]
+    },    
+    {
+        "Sid": "AllowLogsRoleAllLogdelivery",
+        "Effect": "Allow",
+        "Action": [
+            "logs:CreateLogDelivery"
+        ],
+        "Resource": "*"
+    },
+    {
+        "Sid": "AllowLogsRoleCloudWatch",
+        "Effect": "Allow",
+        "Action": [
+            "logs:PutResourcePolicy",
+            "logs:DescribeResourcePolicies",
+            "logs:DescribeLogGroups"
+        ],
+        "Resource": "*"
+    }
+]}

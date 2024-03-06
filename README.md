@@ -1,17 +1,8 @@
-## My Project
+# Fault Injection Simulator (FIS) Deployment Tools
 
-TODO: Fill this README out!
+The FIS Deployment Tools is a utility created to streamline the import of experiment templates in a standardized JSON format and their deployment into your AWS accounts. This tool simplifies the template import process, ensuring adherence to a common structure while providing customization options for specific environments.
 
-Be sure to:
+The execution of these experiments should be carried out using alternative methods after they have been deployed. This can be accomplished through the console or command-line interface (CLI) for one-time runs or via a CI/CD pipeline as a part of your regular deployment testing process.
 
-* Change the title in this README
-* Edit your repository description on GitHub
-
-## Security
-
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
-
-## License
-
-This library is licensed under the MIT-0 License. See the LICENSE file.
-
+FIS deployment tools is currently available in the following languages: 
+- CDK (NodeJS)

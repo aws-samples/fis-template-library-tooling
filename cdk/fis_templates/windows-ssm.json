@@ -1,0 +1,34 @@
+{
+    "description": "This Experiment Stops the IIS service on target Windows Instances",
+    "targets": {
+        "IISServers": {
+            "resourceType": "aws:ec2:instance",
+            "resourceTags": {
+                "FIS-Ready": "true"
+            },
+            "selectionMode": "ALL"
+        }
+    },
+    "actions": {
+        "StopIIS": {
+            "actionId": "aws:ssm:send-command",
+            "parameters": {
+                "documentArn": "arn:aws:ssm:<REGION>:<ACCOUNT ID>:document/StopWindowsService",
+                "documentParameters": "{\"DurationSeconds\": \"60\", \"ServiceName\": \"W3SVC\"}",
+                "duration": "PT5M"
+            },
+            "targets": {
+                "Instances": "IISServers"
+            }
+        }
+    },
+    "stopConditions": [
+        {
+            "source": "none"
+        }
+    ],
+    "roleArn": "arn:aws:iam:::role/WindowsFisDemo",
+    "tags": {
+        "Name": "StopWindowsService"
+    }
+}

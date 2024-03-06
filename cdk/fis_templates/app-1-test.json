@@ -1,0 +1,78 @@
+{
+    "description": "Introducing controlled disk latency during application restarts will uncover potential vulnerabilities, leading to enhanced resilience, as the system's ability to handle delays and recover gracefully will be tested. ",
+    "targets": {
+        "application-server-disk-pause": {
+            "resourceType": "aws:ec2:ebs-volume",
+            "resourceTags": {
+                "FIS-Ready": "True"
+            },
+            "parameters": {},
+            "selectionMode": "ALL"
+        },
+        "application-servers": {
+            "resourceType": "aws:ec2:instance",
+            "resourceTags": {
+                "FIS-Ready": "True"
+            },
+            "selectionMode": "ALL"
+        },
+        "rds-database-cluster": {
+            "resourceType": "aws:rds:cluster",
+            "resourceTags": {
+                "FIS-Ready": "True"
+            },
+            "selectionMode": "ALL"
+        }
+    },
+    "actions": {
+        "failover-database-cluster": {
+            "actionId": "aws:rds:failover-db-cluster",
+            "description": "failover-database-cluster",
+            "parameters": {},
+            "targets": {
+                "Clusters": "rds-database-cluster"
+            }
+        },
+        "inject-disk-latency": {
+            "actionId": "aws:ebs:pause-volume-io",
+            "description": "inject-disk-latency",
+            "parameters": {
+                "duration": "PT2M"
+            },
+            "targets": {
+                "Volumes": "application-server-disk-pause"
+            },
+            "startAfter": [
+                "wait-5m"
+            ]
+        },
+        "reboot-application-server": {
+            "actionId": "aws:ec2:reboot-instances",
+            "description": "reboot-application-server",
+            "parameters": {},
+            "targets": {
+                "Instances": "application-servers"
+            }
+        },
+        "wait-5m": {
+            "actionId": "aws:fis:wait",
+            "description": "wait-5m",
+            "parameters": {
+                "duration": "PT5M"
+            },
+            "startAfter": [
+                "reboot-application-server",
+                "failover-database-cluster"
+            ]
+        }
+    },
+    "stopConditions": [
+        {
+            "source": "none"
+        }
+    ],
+    "roleArn": "arn:aws:iam::<ACCOUNT ID>:role/aws-service-role/fis.amazonaws.com/AWSServiceRoleForFIS",
+    "tags": {
+        "Name": "application-1-test"
+    }
+}
