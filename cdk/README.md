@@ -30,35 +30,54 @@ The `ssmDoc.ts` is a helper function to import SSM documents in the current acco
 Below is an example used to deploy a single experiment within your AWS account. The below example contains all configurable options. Only the role is required for deployment. 
 
 ``` 
-    const linuxTest = new FISTemplateImporter(this, 'linux_srv_latency', {
-      fisTemplatePath: 'fis_templates/linux-srv-latency.json',
+    const aurora-cluster-failover = new FISTemplateImporter(this, 'aurora-cluster-failover', {
+      
+      // Path to Experiment file
+      fisTemplatePath: 'fis_templates/aurora-cluster-failover.json',
+      
+      // IAM role used by the FIS experiment to take action on resources 
       fisRoleARN: fisRole.role.roleArn,
+      
+      // Tags used to target resources in AWS
       fisTags: {
         "FIS-Ready": "True"
       },
+
+      // CloudWatch log Configuration 
       fisLogConfiguration: {
         "cloudWatchLogsConfiguration": {
           "logGroupArn": linuxTestLogGroup.logGroupArn
         },
         "logSchemaVersion": 1
       },
+
+      // Stop condition to terminate experiment 
       fisStopConditions:[{
         "source": "aws:cloudwatch:alarm",
         "value": alarm.alarmArn
       }]
 
+      // Tags to apply to experiment
+      fisExperimentTags: {"Name": "aurora-cluster-failover"}
     });
 
 ```
 
 Example of the minimum required value for deployment. 
 
+Local experiment:
 ```
-    const linuxTest = new FISTemplateImporter(this, 'linux_srv_latency', {
-      fisTemplatePath: 'fis_templates/linux-srv-latency.json',
+    const aurora-cluster-failover = new FISTemplateImporter(this, 'aurora-cluster-failover', {
+      fisTemplatePath: 'fis_templates/aurora-cluster-failover',
       fisRoleARN: fisRole.role.roleArn
     });
-
+```
+Remote Experiment:
+```
+    const aurora-cluster-failover = new FISTemplateImporter(this, 'aurora-cluster-failover', {
+      fisTemplatePath: 'https://raw.githubusercontent.com/awshans/aws-fault-injection-simulator-samples/main/aurora-cluster-failover/aurora-cluster-failover-template.json',
+      fisRoleARN: fisRole.role.roleArn
+    });
 ```
 
 ### Importing a multiple experiments
@@ -82,7 +101,6 @@ Below is an example used to deploy a multiple experiment which are hosed within 
         "source": "aws:cloudwatch:alarm",
         "value": "arn:aws:cloudwatch:<REGION>:<ACCOUNT>:alarm:fis_test"
       }]
-
     });
 ```
 
