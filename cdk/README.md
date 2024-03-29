@@ -25,7 +25,7 @@ The `fis_role.ts` construct takes an IAM policy document and creates a role for 
 You can specify a local or git based policy. 
 
 ### SSM Doc
-The `ssmDoc.ts` is a helper function to import SSM documents in the current account.  
+The `ssm_doc_importer.ts` is a helper function to import SSM documents in the current account.  
 
 ### Importing a single experiment 
 
