@@ -5,7 +5,7 @@ import { Construct } from 'constructs';
 import { fisTemplateImporter } from './fis_importer';
 import { fisIamRole } from './fis_role';
 import { fisMassTemplateImporter } from './fis_mass_importer';
-import {ssmDoc} from './ssmDoc';
+import {ssmDoc} from './ssm_doc_importer';
 
 export class FisDeploymentStack extends cdk.Stack {
 
