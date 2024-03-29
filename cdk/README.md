@@ -20,7 +20,7 @@ The `fis_importer.ts` file contains the `fisTemplateImporter` construct, which t
 
 ### FIS Role
 
-The `fis_role.ts` construct takes an IAM policy document and creates a role for FIS to use. The permission set is stored in `iam_policy.json` and can be customized if needed. By default, when deploying all experiments created will share this same role. This role has been scoped to only allow actions on resources with a `"FIS-Ready": "True"` tag.
+The `fis_role.ts` construct takes an IAM policy document and creates a role for FIS to use. There is an example permission set is stored in `iam_policy.json` and can be customized if needed. This role has been scoped to only allow actions on resources with a `"FIS-Ready": "True"` tag.
 
 You can specify a local or git based policy. 
 
@@ -33,7 +33,7 @@ Below is an example of how to deploy a single experiment within your AWS account
 
 Local experiment:
 ```typescript
-    const aurora-cluster-failover = new fisTemplateImporter(this, 'aurora-cluster-failover', {
+    const aurora_cluster_failover = new fisTemplateImporter(this, 'aurora-cluster-failover', {
       fisTemplatePath: 'fis_templates/aurora-cluster-failover',
       fisRoleARN: fisRole.role.roleArn
     });
@@ -41,7 +41,7 @@ Local experiment:
 Remote Experiment:
 
 ```typescript
-    const aurora-cluster-failover = new fisTemplateImporter(this, 'aurora-cluster-failover', {
+    const aurora_cluster_failover = new fisTemplateImporter(this, 'aurora-cluster-failover', {
       fisTemplatePath: 'https://raw.githubusercontent.com/awshans/aws-fault-injection-simulator-samples/main/aurora-cluster-failover/aurora-cluster-failover-template.json',
       fisRoleARN: fisRole.role.roleArn
     });
@@ -94,7 +94,7 @@ Local policy
 Remote policy
 ```typescript
     // Import IAM policy from git
-    const remotefisRole = new fisIamRole(this, 'remoteFisRole', {
+    const fisRole = new fisIamRole(this, 'FisRole', {
       IamPolicyTemplatePath: "https://raw.githubusercontent.com/awshans/aws-fault-injection-simulator-samples/main/aurora-cluster-failover/aurora-cluster-failover-iam-policy.json"
     })
 
