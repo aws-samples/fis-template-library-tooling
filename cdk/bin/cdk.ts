@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { FisDemoStack } from '../lib/fis_DemoStack';
+import { FisDeploymentStack } from '../lib/fis_deployment_stack';
 
 const app = new cdk.App();
-new FisDemoStack(app, 'FisDemoStack', {
+new FisDeploymentStack(app, 'FisDeploymentStack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */

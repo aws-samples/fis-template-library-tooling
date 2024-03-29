@@ -1,8 +1,8 @@
 import { Construct } from 'constructs';
-import { FISTemplateImporter } from './fis_importer';
+import { fisTemplateImporter } from './fis_importer';
 
 //Interace to pass to fis template importer
-export interface FISMassTemplateImporterProps {
+export interface fisMassTemplateImporterProps {
     fisTemplateFolderPath: string;
     fisRoleARN: string;
     fisTags?: any;
@@ -10,9 +10,9 @@ export interface FISMassTemplateImporterProps {
     fisStopConditions?: any
 }
 
-export class FISMassTemplateImporter extends Construct {
+export class fisMassTemplateImporter extends Construct {
 
-    constructor(scope: Construct, id: string, props: FISMassTemplateImporterProps) {
+    constructor(scope: Construct, id: string, props: fisMassTemplateImporterProps) {
         super(scope, id);
 
         //get a list of all files in 
@@ -29,7 +29,7 @@ export class FISMassTemplateImporter extends Construct {
         //get the file path
         let filePath = props.fisTemplateFolderPath + '/' + fileName;
         
-        new FISTemplateImporter(this, `${fileName}Importer`, {
+        new fisTemplateImporter(this, `${fileName}Importer`, {
             fisTemplatePath: filePath,
             fisRoleARN: props.fisRoleARN,
             fisTags: props.fisTags,

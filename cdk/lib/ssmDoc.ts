@@ -9,7 +9,7 @@ interface SsmDocProps {
   docVersion: string;
 }
 
-export class SsmDoc extends Construct {
+export class ssmDoc extends Construct {
   constructor(scope: Construct, id: string, props: SsmDocProps) {
     super(scope, id);
 

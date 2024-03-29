@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as request from 'sync-request';
 
 // Interface to pass to FIS template importer
-export interface FISTemplateImporterProps {
+export interface fisTemplateImporterProps {
     fisTemplatePath: string;
     fisRoleARN: string;
     fisTags?: any;
@@ -33,9 +33,9 @@ function recursiveUppercaseKeys(obj: any, parentKey: string = "") {
     return obj;
 }
 
-export class FISTemplateImporter extends Construct {
+export class fisTemplateImporter extends Construct {
 
-    constructor(scope: Construct, id: string, props: FISTemplateImporterProps) {
+    constructor(scope: Construct, id: string, props: fisTemplateImporterProps) {
         super(scope, id);
 
         if(!props.fisTags) {
@@ -69,7 +69,7 @@ export class FISTemplateImporter extends Construct {
 
         processTemplate.call(this, rawTemplate);
 
-        function processTemplate(this: FISTemplateImporter, rawTemplate: any) {
+        function processTemplate(this: fisTemplateImporter, rawTemplate: any) {
             rawTemplate["roleArn"] = props.fisRoleARN;
         
             // Override for stop conditions
@@ -88,7 +88,6 @@ export class FISTemplateImporter extends Construct {
             
             // Override for experiment Tags
             if (props.fisExperimentTags !== undefined && Object.keys(props.fisExperimentTags).length !== 0) {
-                console.log("tags found")
                 rawTemplate['tags'] = props.fisExperimentTags;
             } else {
                 // Set the file name as the value for the "Name" key if no tag is specified.
