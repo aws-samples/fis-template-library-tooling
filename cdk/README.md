@@ -29,10 +29,27 @@ The `ssmDoc.ts` is a helper function to import SSM documents in the current acco
 
 ### Importing a single experiment 
 
-Below is an example of how to deploy a single experiment within your AWS account. The example contains all configurable options, but only the `fisRoleARN` is required for deployment.
+Below is an example of how to deploy a single experiment within your AWS account. Experiments can be local or git based. Below are examples of the minimum required value for deployment. 
+
+Local experiment:
+```typescript
+    const aurora-cluster-failover = new fisTemplateImporter(this, 'aurora-cluster-failover', {
+      fisTemplatePath: 'fis_templates/aurora-cluster-failover',
+      fisRoleARN: fisRole.role.roleArn
+    });
+```
+Remote Experiment:
 
 ```typescript
-    const aurora-cluster-failover = new FISTemplateImporter(this, 'aurora-cluster-failover', {
+    const aurora-cluster-failover = new fisTemplateImporter(this, 'aurora-cluster-failover', {
+      fisTemplatePath: 'https://raw.githubusercontent.com/awshans/aws-fault-injection-simulator-samples/main/aurora-cluster-failover/aurora-cluster-failover-template.json',
+      fisRoleARN: fisRole.role.roleArn
+    });
+```
+ The example contains all configurable options.
+
+```typescript
+    const aurora_cluster_failover = new fisTemplateImporter(this, 'aurora-cluster-failover', {
       
       // Path to Experiment file
       fisTemplatePath: 'fis_templates/aurora-cluster-failover.json',
@@ -65,32 +82,17 @@ Below is an example of how to deploy a single experiment within your AWS account
 
 ```
 
-Example of the minimum required value for deployment. 
+Each experiment must be assigned an IAM role. Below are example of how to import a IAM policies for use. These policies should follow least privilege. 
 
-Local experiment:
-```typescript
-    const aurora-cluster-failover = new FISTemplateImporter(this, 'aurora-cluster-failover', {
-      fisTemplatePath: 'fis_templates/aurora-cluster-failover',
-      fisRoleARN: fisRole.role.roleArn
-    });
-```
-Remote Experiment:
-
-```typescript
-    const aurora-cluster-failover = new FISTemplateImporter(this, 'aurora-cluster-failover', {
-      fisTemplatePath: 'https://raw.githubusercontent.com/awshans/aws-fault-injection-simulator-samples/main/aurora-cluster-failover/aurora-cluster-failover-template.json',
-      fisRoleARN: fisRole.role.roleArn
-    });
-```
-
-Importing an IAM policies
-
+Local policy
 ```typescript
     // Import local IAM policy 
     const fisRole = new fisIamRole(this, 'FisRole', {
       IamPolicyTemplatePath: "lib/iam_policy.json"
     })
-  
+```
+Remote policy
+```typescript
     // Import IAM policy from git
     const remotefisRole = new fisIamRole(this, 'remoteFisRole', {
       IamPolicyTemplatePath: "https://raw.githubusercontent.com/awshans/aws-fault-injection-simulator-samples/main/aurora-cluster-failover/aurora-cluster-failover-iam-policy.json"
@@ -120,7 +122,7 @@ There is also a helper class that will import SSM docs from a file. ***Note*** t
       docVersion: '1'
     })
 
-    const windowsService = new FISTemplateImporter(this, 'WindowsService', {
+    const windowsService = new fisTemplateImporter(this, 'WindowsService', {
       fisTemplatePath: 'fis_templates/windows-ssm.json',
       fisRoleARN: fisRole.role.roleArn
     })
