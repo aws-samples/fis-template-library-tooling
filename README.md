@@ -6,3 +6,4 @@ The execution of these experiments should be carried out using alternative metho
 
 FIS deployment tools is currently available in the following languages: 
 - CDK (NodeJS)
+- AWS CLI

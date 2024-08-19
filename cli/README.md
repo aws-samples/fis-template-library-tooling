@@ -39,6 +39,17 @@ aws iam attach-role-policy \
 jq --arg role_arn "$role_arn" '.roleArn = $role_arn' aurora-cluster-failover-template.json > temp.json && mv temp.json aurora-cluster-failover-template.json
 ```
 
+### Importing SSM Docs
+The Aurora experiment does not contain an SSM doc. 
+However the command to import into SSM is below:
+
+```cli
+aws ssm create-document \
+    --content file://my-ssm-doc.json \
+    --name "My-SSM-Document" \
+    --document-type "Command"
+```
+
 ### 4. Create Experiment
 ```cli
 aws fis create-experiment-template --cli-input-json file://aurora-cluster-failover-template.json
