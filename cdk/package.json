@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@babel/traverse": "^7.23.3",
-    "aws-cdk-lib": "2.89.0",
+    "aws-cdk-lib": "2.177.0",
     "constructs": "^10.0.0",
     "fs": "^0.0.1-security",
     "node-fetch": "^3.3.2",
